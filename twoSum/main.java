@@ -18,11 +18,9 @@ public class main {
 
         for (int i = 0 ; i < nums.length ; i++){
              if(tracker.containsKey(nums[i])) {
-    //                 return indexes
-                 System.out.println(tracker.get(nums[i])+ " " +  i);
                  return new int[]{tracker.get(nums[i]), i};
              }
-//             if it doesn't exist store it.  Remainder , index
+//           if it doesn't exist store it.  Remainder , index
              tracker.put(target - nums[i] , i);
         }
         return nums;
