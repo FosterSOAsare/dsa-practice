@@ -4,6 +4,10 @@ public class Stack {
 //    Use a linkedlist
     Node head;
 
+    public boolean isEmpty (){
+        return head == null;
+    }
+
     public boolean decideAction(char value){
         String starts = "[({";
 

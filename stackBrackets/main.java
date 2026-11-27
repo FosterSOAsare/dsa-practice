@@ -13,10 +13,11 @@ public class main {
 
 
     public boolean isValidStack(String stackList){
+        if(stackList.isEmpty()) return false;
         Stack stack = new Stack();
         for (char c : stackList.toCharArray()){
             if(!stack.decideAction(c)) return false;
         }
-        return true;
+        return stack.isEmpty();
     }
 }
