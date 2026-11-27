@@ -2,6 +2,7 @@ package heaps;
 
 public class BinaryHeap {
     int[] heap;
+    int lastIndex;
 //    Create a heap from an array
     public BinaryHeap(int[] arr) {
 //        Create the heap
@@ -29,6 +30,9 @@ public class BinaryHeap {
             }
         }
 
+        this.lastIndex = arr.length - 1 ;
+
+
 
     }
 
@@ -38,5 +42,28 @@ public class BinaryHeap {
             System.out.print( + i + " ");
         }
         System.out.println(" ");
+    }
+
+    public int deleteElement (){
+//        To delete, get the head which is the first item
+        int root = this.heap[0];
+//        get the last item in the arr and fix it at the top
+        this.heap[0] = this.heap[this.lastIndex];
+        this.heap[this.lastIndex ] = 0;
+
+//
+        int parentNodeIndex = 0;
+        while(parentNodeIndex * 2 + 1 <= lastIndex && this.heap[parentNodeIndex] < Math.max(this.heap[parentNodeIndex * 2 + 1] , this.heap[parentNodeIndex * 2])){
+            int greatestIndex = this.heap[parentNodeIndex * 2 + 1] > this.heap[parentNodeIndex * 2] ? parentNodeIndex * 2 + 1 : parentNodeIndex * 2 ;
+            int parentNode = this.heap[parentNodeIndex];
+            this.heap[parentNodeIndex] = this.heap[greatestIndex];
+            this.heap[greatestIndex] = parentNode;
+            parentNodeIndex = greatestIndex ;
+//
+        }
+//
+        this.lastIndex--;
+
+        return root;
     }
 }
