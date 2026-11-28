@@ -2,38 +2,12 @@ package heaps;
 
 public class BinaryHeap {
     int[] heap;
+    int[] arr;
     int lastIndex;
 //    Create a heap from an array
     public BinaryHeap(int[] arr) {
 //        Create the heap
-        this.heap = new int[arr.length];
-
-//        Loop the array and get the item O(n)
-        for (int i = 0 ; i < arr.length ; i++){
-//           get the parentIndex. -1 because trees uses 1 as the start index.
-            int parentIndex = (i + 1) / 2 - 1;
-            if(i == 0 || this.heap[parentIndex] >= arr[i]){
-                this.heap[i] = arr[i];
-                continue;
-            }
-
-            int childIndex = i;
-
-//           Swap as far as the child is greater than the parent
-            while(parentIndex != childIndex && this.heap[parentIndex] < arr[i]){
-//                Swap the values
-               this.heap[childIndex] = this.heap[parentIndex];
-               this.heap[parentIndex] = arr[i];
-
-                childIndex = parentIndex;
-                parentIndex = parentIndex / 2;
-            }
-        }
-
-        this.lastIndex = arr.length - 1 ;
-
-
-
+        this.arr = arr;
     }
 
 
@@ -42,6 +16,34 @@ public class BinaryHeap {
             System.out.print( + i + " ");
         }
         System.out.println(" ");
+    }
+
+    public void createHeap(){
+        this.heap = arr.clone();
+
+//        Loop the array and get the item O(n)
+        for (int i = 0 ; i < this.arr.length ; i++){
+            if(i == 0 ) continue;
+            int parentIndex = (i - 1 )/ 2;
+            int childIndex = i;
+
+            if(this.heap[parentIndex] >= this.heap[childIndex]) continue;
+
+//           Swap as far as the child is greater than the parent
+            while( this.heap[parentIndex] < this.heap[childIndex]){
+//                Swap the values
+                int tmp = this.heap[childIndex];
+                this.heap[childIndex] = this.heap[parentIndex];
+                this.heap[parentIndex] = tmp;
+
+                childIndex = parentIndex; parentIndex = (parentIndex - 1) / 2;
+
+            }
+        }
+
+        this.lastIndex = this.heap.length - 1 ;
+
+        this.iterateHeap();
     }
 
     public int deleteElement (){
@@ -62,8 +64,30 @@ public class BinaryHeap {
 //
         }
 //
+//        Place the deleted item from the back
+        this.heap[lastIndex] = root;
         this.lastIndex--;
 
         return root;
+    }
+
+//    Using two arrays don't work well. Best to clone the array
+    public void heapifyBetter(){
+        heap = arr.clone();
+        int n = heap.length;
+//        after cloning, the leaf elements are already in there so the loop starts at the part above the leaf elements
+        for (int i = n / 2 - 1; i >= 0; i--) siftDown(i, n);
+        this.iterateHeap();
+    }
+
+    private void siftDown(int i, int n) {
+        while (2 * i + 1 < n) {
+            int child = 2 * i + 1;
+            // The greatest child index. If child + 1 and that child is greater, then increase index
+            if (child + 1 < n && heap[child + 1] > heap[child]) child++;
+            if (heap[i] >= heap[child]) break;   // the check you're missing
+            int tmp = heap[i]; heap[i] = heap[child]; heap[child] = tmp;
+            i = child;                            // follow the child you swapped with
+        }
     }
 }
