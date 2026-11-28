@@ -21,7 +21,6 @@ public class BinaryHeap {
     public void createHeap(){
         this.heap = arr.clone();
 
-//        Loop the array and get the item O(n)
         for (int i = 0 ; i < this.arr.length ; i++){
             if(i == 0 ) continue;
             int parentIndex = (i - 1 )/ 2;
@@ -30,7 +29,7 @@ public class BinaryHeap {
             if(this.heap[parentIndex] >= this.heap[childIndex]) continue;
 
 //           Swap as far as the child is greater than the parent
-            while( this.heap[parentIndex] < this.heap[childIndex]){
+            while( childIndex > 0 && this.heap[parentIndex] < this.heap[childIndex]){
 //                Swap the values
                 int tmp = this.heap[childIndex];
                 this.heap[childIndex] = this.heap[parentIndex];
