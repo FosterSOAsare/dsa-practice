@@ -46,7 +46,7 @@ public class BinaryHeap {
         this.iterateHeap();
     }
 
-    public int delElem(){
+    public int deleteElement(){
         if(this.lastIndex < 0) throw new IllegalStateException("Heap is empty");
         int root = this.heap[0];
 //        get the last item in the arr and fix it at the top
@@ -74,30 +74,6 @@ public class BinaryHeap {
         return root;
     }
 
-    public int deleteElement (){
-//        To delete, get the head which is the first item
-        int root = this.heap[0];
-//        get the last item in the arr and fix it at the top
-        this.heap[0] = this.heap[this.lastIndex];
-        this.heap[this.lastIndex] = 0;
-
-        int parentNodeIndex = 0;
-        while(parentNodeIndex * 2 + 1 <= lastIndex && this.heap[parentNodeIndex] < Math.max(this.heap[parentNodeIndex * 2 + 1] , this.heap[parentNodeIndex * 2])){
-            int greatestIndex = this.heap[parentNodeIndex * 2 + 1] > this.heap[parentNodeIndex * 2] ? parentNodeIndex * 2 + 1 : parentNodeIndex * 2 ;
-            if(this.heap[greatestIndex] <= this.heap[parentNodeIndex]) break;
-            int parentNode = this.heap[parentNodeIndex];
-            this.heap[parentNodeIndex] = this.heap[greatestIndex];
-            this.heap[greatestIndex] = parentNode;
-            parentNodeIndex = greatestIndex ;
-//
-        }
-//
-//        Place the deleted item from the back
-        this.heap[lastIndex] = root;
-        this.lastIndex--;
-
-        return root;
-    }
 
 //    Using two arrays don't work well. Best to clone the array
     public void heapifyBetter(){

@@ -5,11 +5,13 @@ public class main {
         int[] arr = {1, 2, 3, 4, 5, 6, 7};
         BinaryHeap heap = new BinaryHeap(arr);
         heap.createHeap();
-//        heap.iterateHeap();
+//
         heap.heapifyBetter();
 
-        heap.delElem();
-        heap.delElem();
+        heap.deleteElement();
+        heap.deleteElement();
+
+        heap.iterateHeap();
 
 //        This converts the heap from what it was to a sorted array in ascending order
 //        for (int i = 0 ; i < arr.length ; i++){
