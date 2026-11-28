@@ -8,6 +8,7 @@ public class BinaryHeap {
     public BinaryHeap(int[] arr) {
 //        Create the heap
         this.arr = arr;
+        this.lastIndex = arr.length;
     }
 
 
@@ -45,17 +46,45 @@ public class BinaryHeap {
         this.iterateHeap();
     }
 
+    public int delElem(){
+        if(this.lastIndex < 0) throw new IllegalStateException("Heap is empty");
+        int root = this.heap[0];
+//        get the last item in the arr and fix it at the top
+        this.heap[0] = this.heap[this.lastIndex];
+
+
+        int parentNodeIndex = 0;
+//        Get the children and the largest value
+        while (parentNodeIndex * 2 + 1 <= lastIndex){
+//            get the greatest child index
+            int greatestIndex = parentNodeIndex * 2 + 1;
+            if(greatestIndex + 1 <= lastIndex){
+                greatestIndex = this.heap[greatestIndex] > this.heap[greatestIndex + 1] ? greatestIndex : greatestIndex + 1 ;
+            }
+            if(this.heap[parentNodeIndex] >= this.heap[greatestIndex]) break;
+
+            int parentNode = this.heap[parentNodeIndex];
+            this.heap[parentNodeIndex] = this.heap[greatestIndex];
+            this.heap[greatestIndex] = parentNode;
+            parentNodeIndex = greatestIndex ;
+        }
+
+        this.heap[this.lastIndex ] = 0;
+        lastIndex--;
+        return root;
+    }
+
     public int deleteElement (){
 //        To delete, get the head which is the first item
         int root = this.heap[0];
 //        get the last item in the arr and fix it at the top
         this.heap[0] = this.heap[this.lastIndex];
-        this.heap[this.lastIndex ] = 0;
+        this.heap[this.lastIndex] = 0;
 
-//
         int parentNodeIndex = 0;
         while(parentNodeIndex * 2 + 1 <= lastIndex && this.heap[parentNodeIndex] < Math.max(this.heap[parentNodeIndex * 2 + 1] , this.heap[parentNodeIndex * 2])){
             int greatestIndex = this.heap[parentNodeIndex * 2 + 1] > this.heap[parentNodeIndex * 2] ? parentNodeIndex * 2 + 1 : parentNodeIndex * 2 ;
+            if(this.heap[greatestIndex] <= this.heap[parentNodeIndex]) break;
             int parentNode = this.heap[parentNodeIndex];
             this.heap[parentNodeIndex] = this.heap[greatestIndex];
             this.heap[greatestIndex] = parentNode;
@@ -77,6 +106,8 @@ public class BinaryHeap {
 //        after cloning, the leaf elements are already in there so the loop starts at the part above the leaf elements
         for (int i = n / 2 - 1; i >= 0; i--) siftDown(i, n);
         this.iterateHeap();
+
+
     }
 
     private void siftDown(int i, int n) {

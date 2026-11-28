@@ -8,6 +8,9 @@ public class main {
 //        heap.iterateHeap();
         heap.heapifyBetter();
 
+        heap.delElem();
+        heap.delElem();
+
 //        This converts the heap from what it was to a sorted array in ascending order
 //        for (int i = 0 ; i < arr.length ; i++){
 //            heap.deleteElement();
